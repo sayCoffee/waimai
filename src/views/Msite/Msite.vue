@@ -27,7 +27,7 @@
       </div>
       <div class="shops_content">
         <ul>
-          <li v-for="(item, key) in shops" :key="key" class="shops_list">
+          <router-link v-for="(item, key) in shops" :key="key" class="shops_list" tag="li" :to="{path: '/shop' }">
             <div class="content_left">
               <img :src="item.image_path">
               <span>品牌</span>
@@ -40,7 +40,7 @@
               <div class="store_middle">
                 <span class="store_score">{{ item.rating }}</span>
                 <span class="store_num">月售{{ item.recent_order_num }}单</span>
-                <van-rate v-model="item.rating" :size="10" color="#ff6000" readonly/>
+                <van-rate v-model="item.rating" :size="10" color="#ff6000" readonly :allow-half="true"/>
                 <span class="store_title">{{ item.delivery_mode.text }}</span>
               </div>
               <div class="store_bottom">
@@ -49,7 +49,7 @@
                 <span>配送费约￥{{ item.float_delivery_fee }}</span>
               </div>
             </div>
-          </li>
+          </router-link>
         </ul>
       </div>
     </div>

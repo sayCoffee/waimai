@@ -8,3 +8,9 @@ export const reqAddress = () => ajax(`${BASE_URL}/location/shop`);
 export const reqCategorys = () => ajax(`${BASE_URL}/menu`);
 //获取店铺列表
 export const reqShops = (longitude, latitude) => ajax(`${BASE_URL}/shops/list`, {longitude, latitude});
+//获取商家信息
+export const reqShopsInfo = () => ajax(`${BASE_URL}/shops/details/1`);
+//获取商品列表
+export const reqShopsGoods = () => ajax(`${BASE_URL}/shop/goods/list`);
+//获取评价
+export const reqShopsRatings = () => ajax(`${BASE_URL}/goods/ratings`);

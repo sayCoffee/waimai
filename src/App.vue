@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <router-view :class="{ showFoot: true }" />
-    <FooterGuide />
+    <router-view :class="{ showFoot: $route.meta.showFooter }" />
+    <FooterGuide v-if="$route.meta.showFooter"/>
   </div>
 </template>
 

@@ -3,7 +3,7 @@
     <HeaderTop title="订单列表"/>
     <div class="order_content">
       <img src="../../assets/images/person.png">
-      <h3>登录后查看外卖订单</h3>
+      <p>登录后查看外卖订单</p>
       <div class="order_login">立即登录</div>
     </div>
   </div>
@@ -35,13 +35,12 @@ export default {
     margin 0 auto
     img 
       width 100%
-    h3 
+    p 
       font-size 17px
       color #6a6a6a
       padding 10px 0
     .order_login
       width 96px
-      height 38px
       background-color #02a774
       font-size 14px
       color #fff

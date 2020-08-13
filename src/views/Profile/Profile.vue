@@ -125,10 +125,10 @@ export default {
               font-size 20px
               margin-left -4px
         .profile_arrow
-          float right 
           position absolute
           right 0
           top 20px
+          z-index 1
           .icon-you
             font-size 14px
   .profile_data

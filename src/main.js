@@ -6,7 +6,15 @@ import "@/assets/iconfont/iconfont.css";
 import "@/assets/styles/reset.css";
 import { Swipe, SwipeItem } from "vant";
 import { Rate } from "vant";
+import { Popup } from "vant";
+import { Stepper } from "vant";
 
+
+
+
+
+Vue.use(Stepper);
+Vue.use(Popup);
 Vue.use(Rate);
 Vue.use(Swipe);
 Vue.use(SwipeItem);
