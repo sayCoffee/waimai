@@ -94,7 +94,7 @@
 
         <div class="shop_tab">
             <div class="tab_item" v-for="(value, index) in navs" :key="index">
-                <router-link :to="value.path">{{ value.name }}</router-link>
+                <router-link :to="value.path" replace>{{ value.name }}</router-link>
             </div>
         </div>
     </div>
