@@ -3,7 +3,12 @@
     <div class="goods_content">
       <div class="goods_title">
         <ul>
-          <li v-for="(item, key) in goods" :key="key" class="menu_title current">
+          <li 
+            v-for="(item, key) in goods" 
+            :key="key" 
+            :class="{current: key === currentIndex}"
+            @click="clickItem(key)"
+            class="menu_title">
             <div class="goods_tab">
               <img :src="item.icon" class="tab_img" v-if="item.icon">
               {{ item.name }}
@@ -12,7 +17,7 @@
         </ul>
       </div>
       <div class="goods_info">
-        <ul>
+        <ul ref="goodsUl">
           <li v-for="(value, index) in goods" :key="index">
             <div class="food_title">{{ value.name }}</div> 
             <div 
@@ -149,18 +154,46 @@ export default {
     return {
       show: false,
       food: {},
-      cars: {},
-      showCar: false,
-      total: 0,
-      price: 0
+      cars: {}, //存放购物车列表
+      showCar: false, //是否显示购物车列表
+      total: 0, //总数量
+      price: 0, //总价格
+      tops: [], //存放右侧食品列表的高度
+      scrollY: 0, //滚动高度
     }
   },
   mounted() {
     this.$store.dispatch('getShopsGoods');
+    // console.log(document.getElementsByClassName('goods_info'));
+    if(document.getElementsByClassName('goods_info')[0]) {
+      document.getElementsByClassName('goods_info')[0].addEventListener('scroll', this.initHeight);
+    }
   },
   computed: {
     ...mapState(['goods', 'info', 'carFoods']),
     // ...mapGetters(['totalCount', 'totalPrice'])
+    currentIndex() {
+      const {scrollY, tops} = this;
+      const index = tops.findIndex((item, key) => {
+        return scrollY >= item && scrollY < tops[key + 1];
+      })
+      return index;
+    }
+  },
+  watch: {
+    goods() {
+      this.$nextTick(() => {
+        const foodTops = [];
+        let top = 0;
+        foodTops.push(top);
+        const lis = this.$refs.goodsUl.children;
+        Array.prototype.slice.call(lis).forEach(li => {
+          top += li.clientHeight;
+          foodTops.push(top);
+        })
+        this.tops = foodTops;
+      });
+    }
   },
   methods: {
     showFood(item, event) {
@@ -211,6 +244,32 @@ export default {
       this.total = 0;
       this.price = 0;
       this.showCar = false;
+    },
+    initHeight() {
+      // const foodTops = [];
+      // let top = 0;
+      // foodTops.push(top);
+      // const lis = this.$refs.goodsUl.children;
+      // Array.prototype.slice.call(lis).forEach(li => {
+      //   top += li.clientHeight;
+      //   foodTops.push(top);
+      // })
+      // this.tops = foodTops;
+      // console.log(this.tops);
+      this.scrollY = Math.floor(document.getElementsByClassName('goods_info')[0].scrollTop);
+      // console.log(this.scrollY);
+    },
+    clickItem(key){
+      this.initHeight();
+      const scrollR = this.tops[key];
+      console.log(this.tops);
+      console.log(key);
+      console.log(scrollR);
+      this.scrollY = scrollR;
+      document.getElementsByClassName('goods_info')[0].scrollTo({
+        top: scrollR, 
+        behavior: 'smooth' 
+      });
     }
   }
 };
@@ -259,6 +318,7 @@ export default {
         display none /* Chrome Safari */
       ul
         li 
+          overflow hidden
           .food_title
             height 26px
             line-height 26px
